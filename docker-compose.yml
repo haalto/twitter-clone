@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: "${APP_NAME}-backend"
+    restart: always
+    env_file: .env
+    volumes:
+      - type: bind
+        source: ./backend/src
+        target: /usr/src/app/src
+    expose: 
+      - "${API_PORT}"
+    ports: 
+      - "${API_PORT}:${API_PORT}"
+    command: npm run watch
+    environment: 
+      - PORT=${API_PORT}
+      - DB_URL=postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+
+  db:
+    image: postgres
+    restart: always
+    env_file: .env
+    container_name: "${APP_NAME}-database"
+    environment: 
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: "${APP_NAME}-frontend"
+    env_file: .env
+    expose:
+      - "${CLIENT_PORT}"
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    volumes:
+      - type: bind
+        source: ./frontend/src
+        target: /usr/src/app/src
+      - type: bind
+        source: ./frontend/public
+        target: /usr/src/app/public
+    command: npm start
