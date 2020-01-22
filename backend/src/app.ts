@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import { json } from 'body-parser'
 import { Sequelize } from 'sequelize'
 import tweetRouter from './routes/tweets'
+import userRouter from './routes/users'
 
 const db = new Sequelize(DB_URL)
 db.authenticate()
@@ -13,6 +14,7 @@ const app = express()
 app.use(json())
 
 app.use('/api/tweets', tweetRouter)
+app.use('/api/users', userRouter)
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message })
