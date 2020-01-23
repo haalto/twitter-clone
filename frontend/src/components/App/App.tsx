@@ -1,12 +1,13 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import Login from '../Login/Login'
+import './App.css'
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      hello world
+      <Login username="dasd" password="das"/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

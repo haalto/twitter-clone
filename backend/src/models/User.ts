@@ -21,7 +21,8 @@ User.init({
     primaryKey: true    
   },
   username: {
-    type: DataTypes.STRING(15)
+    type: DataTypes.STRING(15),
+    unique: true
   },
   nickname: {
     type:DataTypes.STRING(15)
@@ -33,6 +34,8 @@ User.init({
   sequelize,
   tableName: 'users'
 })
+
+
 
 /*
 User.hasMany(Tweet, {
