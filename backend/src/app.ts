@@ -2,8 +2,10 @@ import { PORT, DB_URL } from './utils/config'
 import express, { Request, Response, NextFunction } from 'express'
 import { json } from 'body-parser'
 import { Sequelize } from 'sequelize'
+import cors from 'cors'
 import tweetRouter from './routes/tweets'
 import userRouter from './routes/users'
+import loginRouter from './routes/login'
 
 const db = new Sequelize(DB_URL)
 db.authenticate()
@@ -11,8 +13,10 @@ db.authenticate()
   .catch((error: any) => console.log(`Error when connecting to the database: ${error}`))
 
 const app = express()
-app.use(json())
 
+app.use(cors())
+app.use(json())
+app.use('/api/login', loginRouter)
 app.use('/api/tweets', tweetRouter)
 app.use('/api/users', userRouter)
 
