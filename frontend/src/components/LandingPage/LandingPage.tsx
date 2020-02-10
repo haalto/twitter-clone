@@ -1,16 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-//Styles
-const headerStyle = {
-  marginTop: '10vh'
-}
-
-const buttonStyle = {
-  marginTop: '10vh',
-  marginBottom: '10vh'
-}
-
 const LandingPage: React.FC = () => {
 
   const history = useHistory()

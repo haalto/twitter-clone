@@ -10,7 +10,6 @@ sequelize.sync({
 export class Tweet extends Model {
   public id!: number
   public ownerId!: string
-  public title!: string
   public content!: string
   public likes!: number
 
@@ -26,10 +25,6 @@ Tweet.init({
   },
   ownerId: {
     type: DataTypes.UUID
-  },
-  title: {
-    type: DataTypes.STRING(50),
-    allowNull: false
   },
   content: {
     type: DataTypes.STRING(284)

@@ -6,6 +6,7 @@ import cors from 'cors'
 import tweetRouter from './routes/tweets'
 import userRouter from './routes/users'
 import loginRouter from './routes/login'
+import { unknownEndpoint, errorHandler } from './utils/middleware'
 
 const db = new Sequelize(DB_URL)
 db.authenticate()
@@ -20,10 +21,9 @@ app.use('/api/login', loginRouter)
 app.use('/api/tweets', tweetRouter)
 app.use('/api/users', userRouter)
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({ message: err.message })
-})
-
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
 })
+
+app.use(unknownEndpoint)
+app.use(errorHandler)

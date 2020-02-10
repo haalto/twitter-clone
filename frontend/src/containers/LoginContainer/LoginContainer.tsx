@@ -3,16 +3,24 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { login } from '../../services/loginServices'
 import LoginForm from '../../components/LoginForm/LoginForm'
+import Notification from '../../components/Notification/Notification'
 
 const LoginContainer: React.FC = () => {
   
-  interface State {
+  interface SystemState {
     system: {
       loggedIn: boolean
     }
   }
 
-  const loggedIn = useSelector((state: State) => state.system.loggedIn)
+  interface NotificationState {
+    notification: {
+      message: string | null
+    }
+  }
+
+  const message = useSelector((state: NotificationState) => state.notification.message)
+  const loggedIn = useSelector((state: SystemState) => state.system.loggedIn)
   const dispatch = useDispatch()
 
   const usernameInputRef = useRef<HTMLInputElement>(null)
@@ -38,11 +46,13 @@ const LoginContainer: React.FC = () => {
       dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: true, token: token, username: username}})
 
       localStorage.setItem('token', token)
-      localStorage.setItem('username', username)
+      localStorage.setItem('username', username)      
     }
-
     catch (err) {
-      console.log(err)
+      dispatch({type: 'UPDATE_NOTIFICATION', payload: {message: 'Username or password is wrong!'}})
+      setTimeout(() => {
+        dispatch({type: 'UPDATE_NOTIFICATION', payload: {message: null}})
+      }, 2000)     
     }
   }
   
@@ -50,11 +60,16 @@ const LoginContainer: React.FC = () => {
    return (<Redirect to="/"></Redirect>)
   } else {
     return (
-      <LoginForm 
-        handleSubmit={handleSubmit}
-        usernameInputRef={usernameInputRef}
-        passwordInputRef={passwordInputRef}>
-      </LoginForm>
+      <div>
+        <Notification 
+          message={message}>        
+        </Notification>
+        <LoginForm 
+          handleSubmit={handleSubmit}
+          usernameInputRef={usernameInputRef}
+          passwordInputRef={passwordInputRef}>
+        </LoginForm>
+      </div>
     )
   }
 }

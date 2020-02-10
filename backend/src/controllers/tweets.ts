@@ -4,10 +4,9 @@ import { Tweet } from '../models/Tweet'
 export const createTweet: RequestHandler = async (req, res, next) => {
   
   try {
-    const title = (req.body as { title: string }).title
     const content = (req.body as { content: string}).content
 
-    const tweet: Tweet = await Tweet.create({ title, content })
+    const tweet: Tweet = await Tweet.create({ content })
     res.status(200).json(tweet.toJSON())
 
   } catch (err) {

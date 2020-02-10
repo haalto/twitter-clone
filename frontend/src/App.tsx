@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import LoginContainer from './containers/LoginContainer/LoginContainer'
 import RegisterContainer from './containers/RegisterContainer/RegisterContainer'
 import LandingPage from './components/LandingPage/LandingPage'
-import TweetContainer from './containers/TweetContainer/TweetContainer'
+import MainContainer from './containers/MainContainer/MainContainer'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 const App: React.FC = () => {
@@ -14,6 +14,7 @@ const App: React.FC = () => {
     }
   }
 
+  const token = useSelector((state:State) => state.system.token)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,15 +26,13 @@ const App: React.FC = () => {
     }
   })
 
-  const token = useSelector((state:State) => state.system.token)
-
   return (
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={token ? TweetContainer : LandingPage}/>
-          <Route exact path="/login" component={token ? TweetContainer : LoginContainer}/>
-          <Route exact path="/register" component={token ? TweetContainer : RegisterContainer}/>
+          <Route exact path="/" component={token ? MainContainer : LandingPage}/>
+          <Route exact path="/login" component={LoginContainer}/>
+          <Route exact path="/register" component={RegisterContainer}/>
         </Switch>
       </div>
     </BrowserRouter>  
