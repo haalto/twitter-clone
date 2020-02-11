@@ -1,9 +1,30 @@
 import React from 'react'
 
-const TweetList: React.FC = () => {
+interface Tweet {
+  content: string
+}
+
+interface Props {
+  tweets: Tweet[]
+}
+
+const TweetList: React.FC<Props> = ({ tweets }) => {
+  
+  interface Tweet {
+    content: string
+  }
+
+  interface TweetState {
+    tweets: {
+      tweets: []
+    }
+  }
+
+  const renderTweets = (tweets: Tweet[]) => tweets.map(tweet => <div key={Math.random()}>{tweet.content}</div>)
+  
   return (
     <div>
-      tweet are listed here
+      {tweets.length === 0 ? 'No tweets available!' : renderTweets(tweets)}
     </div>
   )
 }

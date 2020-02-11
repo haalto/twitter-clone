@@ -1,5 +1,6 @@
 import { Router } from 'express'
 const tweetRouter = Router()
+import { checkJwt } from '../utils/middleware'
 import { createTweet,
          getTweet,
          getTweets,
@@ -7,7 +8,7 @@ import { createTweet,
         } 
 from '../controllers/tweets'
 
-tweetRouter.post('/', createTweet)
+tweetRouter.post('/', [checkJwt], createTweet)
 
 tweetRouter.get('/', getTweets)
 

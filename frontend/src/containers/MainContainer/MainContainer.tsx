@@ -1,22 +1,43 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Navbar from '../../components/Navbar/Navbar'
 import NewTweetForm from '../../components/NewTweetForm/NewTweetForm'
 import TweetList from '../../components/TweetList/TweetList'
-import { newTweet } from '../../services/tweetServices'
+import { newTweet, getTweets } from '../../services/tweetServices'
 
 const MainContainer = () => {
   
   interface SystemState {
     system: {
-      token: string
+      token: string,
+      loggedIn: boolean,
+      username: string
     }
   }
 
+  interface Tweet {
+    content: string
+  }
+
+  interface TweetState {
+    tweets: {
+      tweets: Tweet[]
+    }
+  }
   const dispatch = useDispatch()
   const token = useSelector((state: SystemState) => state.system.token)
-  
+  const tweets = useSelector((state: TweetState) => state.tweets.tweets)
   const tweetInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getTweets()
+      if (response) {
+        dispatch({type: 'ADD_TWEETS', payload: response.data})
+      }
+    }
+    fetchData()        
+  }, [])
 
   const handleLogout = () => {    
     dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: false, token: null, username: null}})
@@ -32,9 +53,10 @@ const MainContainer = () => {
 
     try {
       const response = await newTweet(tweetObject, token)
+      dispatch({type: 'SEND_TWEET', payload: response.data})
       console.log(response)
+      tweetInputRef.current!.value = ''
     }
-
     catch (err) {
       console.log(err)
     }    
@@ -47,7 +69,7 @@ const MainContainer = () => {
         tweetInputRef={tweetInputRef}
         handleSubmit={handleSubmit}
       />
-      <TweetList/>
+      <TweetList tweets={tweets}/>
     </div>
   )
 }

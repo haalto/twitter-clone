@@ -1,12 +1,14 @@
-import { RequestHandler } from 'express'
+import { RequestHandler, Request } from 'express'
 import { Tweet } from '../models/Tweet'
 
 export const createTweet: RequestHandler = async (req, res, next) => {
   
+  const jwtPayload = res.locals.decodedToken
+  const ownerId = jwtPayload.userId
+
   try {
     const content = (req.body as { content: string}).content
-
-    const tweet: Tweet = await Tweet.create({ content })
+    const tweet: Tweet = await Tweet.create({ content, ownerId })
     res.status(200).json(tweet.toJSON())
 
   } catch (err) {
@@ -19,7 +21,7 @@ export const getTweets: RequestHandler = async (req, res, next) => {
   try {
     const tweets: Tweet[] = await Tweet.findAll()
     
-    if (tweets) {
+    if (!tweets) {
       throw new Error('Could not find any tweets')
     }
 
