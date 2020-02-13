@@ -1,15 +1,19 @@
 import { RequestHandler, Request } from 'express'
 import { Tweet } from '../models/Tweet'
+import { User } from '../models/User'
 
 export const createTweet: RequestHandler = async (req, res, next) => {
   
   const jwtPayload = res.locals.decodedToken
-  const ownerId = jwtPayload.userId
+  const userId = jwtPayload.userId
 
   try {
     const content = (req.body as { content: string}).content
-    const tweet: Tweet = await Tweet.create({ content, ownerId })
-    res.status(200).json(tweet.toJSON())
+    const user: User = User.findOne<User>({where: { id: userId }})
+    const newTweet: Tweet = await Tweet.create({ content, userId})
+    //const tweet: Tweet = await Tweet.create({ content, userId })
+    //const newTweet: Tweet = await user.createTweet()
+    res.status(200).json(newTweet.toJSON())
 
   } catch (err) {
     next(err)

@@ -1,11 +1,8 @@
-import { Model, DataTypes, Sequelize } from 'sequelize'
-import { DB_URL } from '../utils/config'
+import { Model, DataTypes } from 'sequelize'
+import { Association } from 'sequelize'
 import { Tweet } from './Tweet'
-
-const sequelize = new Sequelize(DB_URL)
-sequelize.sync({
-  force: true
-})
+import sequelize from '../utils/db'
+const db = sequelize
 
 export class User extends Model {
   
@@ -13,6 +10,11 @@ export class User extends Model {
   public username!: string
   public nickname!: string
   public password!: string
+
+  public readonly tweets?: Tweet[]
+  public static associations: {
+    tweets: Association<User, Tweet>;
+  }
 }
 
 User.init({
@@ -31,16 +33,12 @@ User.init({
     type: DataTypes.STRING(1000)
   }
 }, {
-  sequelize,
+  sequelize: db,
   tableName: 'users'
 })
 
-
-
-/*
 User.hasMany(Tweet, {
   sourceKey: 'id',
-  foreignKey: 'ownerId',
+  foreignKey: 'userId',
   as: 'tweets'
 })
-*/

@@ -2,6 +2,7 @@ import { hash, genSalt } from 'bcryptjs'
 import { RequestHandler } from 'express'
 import { User } from '../models/User'
 import { v1 } from 'uuid'
+import { Tweet } from '../models/Tweet'
 
 export const createUser: RequestHandler = async (req, res, next) => {
   try {
@@ -46,12 +47,15 @@ export const getUsers: RequestHandler = async (req, res, next) => {
 export const getUser: RequestHandler = async (req, res, next) => {
   try {
     const id: string = (req.params as { id: string }).id
-    const user: User = await User.findOne({ where: { id } })
+    const user: User = await User.findByPk(id, {
+      include: [User.associations.tweets]
+    })
 
     if (!user) {
       throw new Error('Could not find user!')
     }
 
+    console.log(user.tweets)
     delete user.password
     
     res.status(200).json(user)

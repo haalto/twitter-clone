@@ -1,15 +1,10 @@
-import { Model, DataTypes, Sequelize, UUID } from 'sequelize'
-import { DB_URL } from '../utils/config'
-import { User } from './User'
- 
-const sequelize = new Sequelize(DB_URL)
-sequelize.sync({
-  force: true
-})
+import { Model, DataTypes } from 'sequelize'
+import sequelize from '../utils/db'
+const db = sequelize
 
 export class Tweet extends Model {
   public id!: number
-  public ownerId!: string
+  public userId!: string
   public content!: string
   public likes!: number
 
@@ -23,7 +18,7 @@ Tweet.init({
     autoIncrement: true,
     primaryKey: true
   },
-  ownerId: {
+  userId: {
     type: DataTypes.UUID
   },
   content: {
@@ -35,9 +30,7 @@ Tweet.init({
   }
 }, 
   { 
-    sequelize,
+    sequelize: db,
     tableName: 'tweets', 
   }
 )
-
-//Tweet.belongsTo(User, { targetKey: 'id' })

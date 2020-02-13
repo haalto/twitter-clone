@@ -37,7 +37,7 @@ const MainContainer = () => {
       }
     }
     fetchData()        
-  }, [])
+  }, [dispatch])
 
   const handleLogout = () => {    
     dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: false, token: null, username: null}})
@@ -54,7 +54,6 @@ const MainContainer = () => {
     try {
       const response = await newTweet(tweetObject, token)
       dispatch({type: 'SEND_TWEET', payload: response.data})
-      console.log(response)
       tweetInputRef.current!.value = ''
     }
     catch (err) {

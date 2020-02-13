@@ -7,8 +7,12 @@ import tweetRouter from './routes/tweets'
 import userRouter from './routes/users'
 import loginRouter from './routes/login'
 import { unknownEndpoint, errorHandler } from './utils/middleware'
+import sequelize from './utils/db'
 
-const db = new Sequelize(DB_URL)
+const db = sequelize
+/*const db = new Sequelize(DB_URL, {
+  dialect: 'postgres'
+})*/
 db.authenticate()
   .then(() => console.log('Connected to the database!'))
   .catch((error: any) => console.log(`Error when connecting to the database: ${error}`))

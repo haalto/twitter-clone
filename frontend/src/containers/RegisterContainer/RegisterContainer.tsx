@@ -23,14 +23,11 @@ const RegisterContainer = () => {
 
     try {
       const response = await register(newUserObject)
-      console.log(response)
       usernameInputRef.current!.value = ''
       nicknameInputRef.current!.value = ''
       passwordInputRef.current!.value = ''
-    }
-
-    catch (e) {
-      console.log(e)
+    } catch (err) {
+      console.log(err)
     }
   }
   

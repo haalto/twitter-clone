@@ -22,9 +22,9 @@ const App: React.FC = () => {
     const username = localStorage.getItem('username')
 
     if (token && username) {
-      dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: true, token: token, username: username}})
+      dispatch({ type: 'UPDATE_SESSION', payload: { loggedIn: true, token: token, username: username } })
     }
-  })
+  }, [dispatch])
 
   return (
     <BrowserRouter>
