@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Tweet from '../Tweet/Tweet'
 interface Tweet {
   content: string
 }
@@ -10,17 +10,8 @@ interface Props {
 
 const TweetList: React.FC<Props> = ({ tweets }) => {
   
-  interface Tweet {
-    content: string
-  }
-
-  interface TweetState {
-    tweets: {
-      tweets: []
-    }
-  }
-
-  const renderTweets = (tweets: Tweet[]) => tweets.map(tweet => <div key={Math.random()}>{tweet.content}</div>)
+  const renderTweets = (tweets: Tweet[]) => tweets.map(tweet => <div key={Math.random()}>
+    {tweet.content}</div>)
   
   return (
     <div>
