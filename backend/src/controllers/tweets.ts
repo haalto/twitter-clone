@@ -1,19 +1,24 @@
 import { RequestHandler, Request } from 'express'
-import { Tweet } from '../models/Tweet'
-import { User } from '../models/User'
+import { Tweet } from '../entity/Tweet'
+import { User } from '../entity/User'
+import { connect } from '../utils/connection'
 
 export const createTweet: RequestHandler = async (req, res, next) => {
-  
-  const jwtPayload = res.locals.decodedToken
-  const userId = jwtPayload.userId
-
   try {
+    const db = await connect
+
+    const jwtPayload = res.locals.decodedToken
+    const userId = jwtPayload.userId
     const content = (req.body as { content: string}).content
-    const user: User = User.findOne<User>({where: { id: userId }})
-    const newTweet: Tweet = await Tweet.create({ content, userId})
+
+
+    const user: User | undefined = await db.manager.findOne(User, userId)
+    const newTweet = await db.manager.create(Tweet, {content, userId})
+    //const user: User = User.findOne<User>({where: { id: userId }})
+    //const newTweet: Tweet = await Tweet.create({ content, userId})
     //const tweet: Tweet = await Tweet.create({ content, userId })
     //const newTweet: Tweet = await user.createTweet()
-    res.status(200).json(newTweet.toJSON())
+    res.status(200).json(newTweet)
 
   } catch (err) {
     next(err)
@@ -23,7 +28,8 @@ export const createTweet: RequestHandler = async (req, res, next) => {
 export const getTweets: RequestHandler = async (req, res, next) => {
   
   try {
-    const tweets: Tweet[] = await Tweet.findAll()
+    const db = await connect
+    const tweets: Tweet[] = await db.manager.find(Tweet)
     
     if (!tweets) {
       throw new Error('Could not find any tweets')
@@ -36,11 +42,13 @@ export const getTweets: RequestHandler = async (req, res, next) => {
   }
 }
 
-export const getTweet: RequestHandler = async (req, res, next) => {
+export const getTweet: RequestHandler = async (req, res, next) => {  
   
   try {
+    const db = await connect
     const id: number = parseInt(req.params.id)
-    const tweet: Tweet = await Tweet.findOne({ where: { id } })
+    const tweet: Tweet | undefined = await db.manager.findOne(Tweet, id)
+    //const tweet: Tweet = await Tweet.findOne({ where: { id } })
     
     if (!tweet) {
       throw new Error('Tweet does not exist')    
@@ -53,6 +61,7 @@ export const getTweet: RequestHandler = async (req, res, next) => {
   }
 }
 
+/*
 export const deleteTweet: RequestHandler = async (req, res, next) => {
   try {
     const id: number = parseInt(req.params.id)
@@ -63,3 +72,4 @@ export const deleteTweet: RequestHandler = async (req, res, next) => {
     next(err)
   }
 }
+*/

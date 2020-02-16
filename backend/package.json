@@ -22,8 +22,11 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.17.1",
+    "pg-connection-string": "^2.1.0",
     "pg-hstore": "^2.3.3",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^5.21.3",
+    "typeorm": "^0.2.22",
     "uuid": "^3.4.0"
   },
   "devDependencies": {

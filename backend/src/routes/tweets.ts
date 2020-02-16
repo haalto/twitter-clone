@@ -3,8 +3,8 @@ const tweetRouter = Router()
 import { checkJwt } from '../utils/middleware'
 import { createTweet,
          getTweet,
-         getTweets,
-         deleteTweet
+         getTweets
+         //deleteTweet
         } 
 from '../controllers/tweets'
 
@@ -14,6 +14,6 @@ tweetRouter.get('/', getTweets)
 
 tweetRouter.get('/:id', getTweet)
 
-tweetRouter.delete('/:id', deleteTweet)
+//tweetRouter.delete('/:id', deleteTweet)
 
 export default tweetRouter

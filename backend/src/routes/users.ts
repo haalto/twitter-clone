@@ -3,8 +3,7 @@ const userRouter = Router()
 import { createUser,
          getUser,
          getUsers,
-         updateUser,
-         deleteUser
+         updateUser
         } 
 from '../controllers/users'
 
@@ -16,6 +15,6 @@ userRouter.post('/', createUser)
 
 userRouter.put('/:id', updateUser)
 
-userRouter.put('/:id', deleteUser)
+//userRouter.put('/:id', deleteUser)
 
 export default userRouter

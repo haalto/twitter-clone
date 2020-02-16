@@ -1,21 +1,11 @@
-import { PORT, DB_URL } from './utils/config'
-import express, { Request, Response, NextFunction } from 'express'
+import { PORT } from './utils/config'
+import express from 'express'
 import { json } from 'body-parser'
-import { Sequelize } from 'sequelize'
 import cors from 'cors'
 import tweetRouter from './routes/tweets'
 import userRouter from './routes/users'
 import loginRouter from './routes/login'
 import { unknownEndpoint, errorHandler } from './utils/middleware'
-import sequelize from './utils/db'
-
-const db = sequelize
-/*const db = new Sequelize(DB_URL, {
-  dialect: 'postgres'
-})*/
-db.authenticate()
-  .then(() => console.log('Connected to the database!'))
-  .catch((error: any) => console.log(`Error when connecting to the database: ${error}`))
 
 const app = express()
 

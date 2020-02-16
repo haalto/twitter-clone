@@ -1,8 +1,9 @@
 import { RequestHandler } from 'express'
-import { User } from '../models/User'
+import { User } from '../entity/User'
 import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import { JWT_SECRET } from '../utils/config'
+import { connect } from '../utils/connection'
 
 export const checkLoginCredentials: RequestHandler = async (req, res, next) => {
   try {
@@ -13,7 +14,11 @@ export const checkLoginCredentials: RequestHandler = async (req, res, next) => {
       throw new Error('Username or password is missing!')
     }
 
-    const user: User = await User.findOne({ where: { username }})
+    console.log(username)
+    const db = await connect
+    const user = await db.manager.getRepository(User).findOne({ where: { username }})
+    //const user: User = await User.findOne({ where: { username }})
+    console.log(user)
 
     if (!user) {
       throw new Error('Username or password is wrong!')
