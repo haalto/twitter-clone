@@ -12,8 +12,8 @@ const RegisterContainer = () => {
     e.preventDefault()
 
     const username = usernameInputRef.current!.value
-    const nickname = usernameInputRef.current!.value
-    const password = usernameInputRef.current!.value
+    const nickname = nicknameInputRef.current!.value
+    const password = passwordInputRef.current!.value
 
     const newUserObject = {
       username,
@@ -26,6 +26,7 @@ const RegisterContainer = () => {
       usernameInputRef.current!.value = ''
       nicknameInputRef.current!.value = ''
       passwordInputRef.current!.value = ''
+      console.log(response)
     } catch (err) {
       console.log(err)
     }

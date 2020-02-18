@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 
 interface Props {
   tweetInputRef: any
@@ -8,16 +8,51 @@ interface Props {
 const NewTweetForm: React.FC<Props> = ({ tweetInputRef, handleSubmit }) => {
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="textarea"   
+      <form style={formStyle} onSubmit={handleSubmit}>
+        <h4>Send a new tweet!</h4>
+        <textarea    
           ref={tweetInputRef}
+          style={textFieldStyle}
         >     
-        </input>
-        <button type="submit">SEND</button>
+        </textarea>
+        <button style={sendButtonStyle} type="submit">SEND</button>
       </form>
     </div>
   )
 }
+
+const formStyle: CSSProperties = {
+  display:'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginLeft: '20vh',
+  marginRight: '20vh'
+}
+
+const textFieldStyle: CSSProperties = {
+  width: '100%',
+  height: '20vh',
+  resize: 'none',
+  backgroundColor: 'white',
+  borderRadius: '10px',
+  boxShadow: '1px 1px 1px grey',
+  border: 'none',
+  margin: '5vh',
+  fontFamily: 'Shadows Into Light, cursive'
+}
+
+const sendButtonStyle: CSSProperties = {
+  color: 'black',
+  textDecoration: 'none',
+  background: 'white',
+  padding: '5px',
+  borderRadius: '20px',
+  display: 'inline-block',
+  border: 'none',
+  transition: 'all 0.4s ease 0s',
+  fontFamily: 'Shadows Into Light, cursive',
+  width: '20%'
+ }
 
 export default NewTweetForm

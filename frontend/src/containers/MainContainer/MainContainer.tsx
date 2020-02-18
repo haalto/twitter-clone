@@ -16,7 +16,15 @@ const MainContainer = () => {
   }
 
   interface Tweet {
+    id: string
     content: string
+    likes: number
+    createdAt: Date
+    user: {
+      username: string
+      nickname: string
+      id: string
+    }
   }
 
   interface TweetState {
@@ -30,10 +38,15 @@ const MainContainer = () => {
   const tweetInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getTweets()
-      if (response) {
-        dispatch({type: 'ADD_TWEETS', payload: response.data})
+    const fetchData = async () => {      
+      try {
+        const response = await getTweets()
+        if (response.data) {
+          console.log(response.data)
+          dispatch({type: 'ADD_TWEETS', payload: response.data})
+        }
+      } catch (err) {
+        console.log(err)
       }
     }
     fetchData()        
