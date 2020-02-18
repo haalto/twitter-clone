@@ -23,6 +23,9 @@ export class User extends BaseEntity {
   @Column()
   nickname!: string
 
+  @OneToMany(type => Tweet, tweet => tweet.user)
+  tweets!: Tweet[]
+
   @CreateDateColumn()
   createdAt!: Date
 

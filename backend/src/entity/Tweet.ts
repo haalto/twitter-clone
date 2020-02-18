@@ -4,7 +4,7 @@ import { BaseEntity,
          CreateDateColumn, 
          UpdateDateColumn, 
          PrimaryGeneratedColumn,
-         OneToMany 
+         ManyToOne 
 } from 'typeorm'
 import { User } from './User'
 
@@ -13,9 +13,6 @@ export class Tweet extends BaseEntity{
   
   @PrimaryGeneratedColumn('uuid')
   id!: string
-
-  @Column()
-  userId!: string
 
   @Column()
   content!: string
@@ -30,4 +27,7 @@ export class Tweet extends BaseEntity{
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  @ManyToOne(type => User, user => user.tweets)
+  user!: User
 }

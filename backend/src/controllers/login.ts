@@ -7,19 +7,15 @@ import { JWT_SECRET } from '../utils/config'
 export const checkLoginCredentials: RequestHandler = async (req, res, next) => {
   try {
     const username = (req.body as { username: string }).username
-    const password = (req.body as { username: string }).username
+    const password = (req.body as { password: string }).password
+
+    console.log(username, password)
 
     if (!(username && password)) {
       throw new Error('Username or password is missing!')
     }
 
-    console.log(username)
-
-    //const db = await connect
-    //const user = await db.manager.getRepository(User).findOne({ where: { username }})
-    //const user: User = await User.findOne({ where: { username }})
     const user: User | undefined= await User.findOne({ username })    
-    console.log(user)
 
     if (!user) {
       throw new Error('Username or password is wrong!')

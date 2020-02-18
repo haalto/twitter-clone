@@ -26,7 +26,7 @@ export const createUser: RequestHandler = async (req, res, next) => {
 export const getUsers: RequestHandler = async (req, res, next) => {
   try {
 
-    const users = await User.find()
+    const users = await User.find({ relations: ['tweets'] })
 
     if (!users) {
       throw new Error('Could not find any users!')
@@ -45,9 +45,9 @@ export const getUsers: RequestHandler = async (req, res, next) => {
 export const getUser: RequestHandler = async (req, res, next) => {
   try {
     const id: string = (req.params as { id: string }).id
-    const user = await User.findOne({ id })
+    const user = await User.findOne({ id }, { relations: ['tweets'] })
 
-    if (!user) {
+    if (!user || user === undefined) {
       throw new Error('Could not find user!')
     }
 

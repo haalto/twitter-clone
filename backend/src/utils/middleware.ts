@@ -11,7 +11,7 @@ export const errorHandler = (error: Error, req: Request, res: Response, next: Ne
   } else if (error.name === 'ValidationError') {
       return res.status(400).json({ error: error.message })
   } else {
-    return res.status(400).json({ error })
+    return res.status(500).json({ message: `Oops! Something went wrong :(`})
   }
 }
 

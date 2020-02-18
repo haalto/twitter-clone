@@ -7,12 +7,17 @@ import userRouter from './routes/users'
 import loginRouter from './routes/login'
 import { unknownEndpoint, errorHandler } from './utils/middleware'
 import { connect } from './utils/db'
+import { Tweet } from './entity/Tweet'
+import { User } from './entity/User'
 
 const app = express()
 
 connect
-  .then(() => {
+  .then((connection) => {
     console.log('Connected to the database!')
+    //Clear tweets from db when restarting
+    connection.manager.clear(Tweet)
+    //connection.manager.clear(User)
   })
   .catch(err => {
     console.log(`Could not connect to the db: ${err}`)

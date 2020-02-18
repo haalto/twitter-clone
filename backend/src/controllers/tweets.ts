@@ -1,5 +1,6 @@
 import { RequestHandler, Request } from 'express'
 import { Tweet } from '../entity/Tweet'
+import { User } from '../entity/User'
 
 export const createTweet: RequestHandler = async (req, res, next) => {
   try {
@@ -7,7 +8,8 @@ export const createTweet: RequestHandler = async (req, res, next) => {
     const userId = jwtPayload.userId
     const content = (req.body as { content: string}).content
 
-    const newTweet = Tweet.create({ content, userId })
+    const user = await User.findOne({ id: userId})
+    const newTweet = Tweet.create({ content, user })
     await newTweet.save()
     res.status(200).json(newTweet)
 
@@ -19,7 +21,7 @@ export const createTweet: RequestHandler = async (req, res, next) => {
 export const getTweets: RequestHandler = async (req, res, next) => {
   
   try {
-    const tweets = await Tweet.find()
+    const tweets = await Tweet.find({ relations: ['user'] })
 
     if (!tweets) {
       throw new Error('Could not find any tweets')
@@ -36,8 +38,8 @@ export const getTweets: RequestHandler = async (req, res, next) => {
 export const getTweet: RequestHandler = async (req, res, next) => {  
   
   try {
-    const id: number = parseInt(req.params.id)
-    const tweet: Tweet | undefined = await Tweet.findOne({ where: { id } })
+    const id: string = req.params.id
+    const tweet = await Tweet.findOne({ id }, { relations: ['user'] })
     
     if (!tweet) {
       throw new Error('Tweet does not exist')    
