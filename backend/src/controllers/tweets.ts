@@ -1,23 +1,14 @@
 import { RequestHandler, Request } from 'express'
 import { Tweet } from '../entity/Tweet'
-import { User } from '../entity/User'
-import { connect } from '../utils/connection'
 
 export const createTweet: RequestHandler = async (req, res, next) => {
   try {
-    const db = await connect
-
     const jwtPayload = res.locals.decodedToken
     const userId = jwtPayload.userId
     const content = (req.body as { content: string}).content
 
-
-    const user: User | undefined = await db.manager.findOne(User, userId)
-    const newTweet = await db.manager.create(Tweet, {content, userId})
-    //const user: User = User.findOne<User>({where: { id: userId }})
-    //const newTweet: Tweet = await Tweet.create({ content, userId})
-    //const tweet: Tweet = await Tweet.create({ content, userId })
-    //const newTweet: Tweet = await user.createTweet()
+    const newTweet = Tweet.create({ content, userId })
+    await newTweet.save()
     res.status(200).json(newTweet)
 
   } catch (err) {
@@ -28,15 +19,15 @@ export const createTweet: RequestHandler = async (req, res, next) => {
 export const getTweets: RequestHandler = async (req, res, next) => {
   
   try {
-    const db = await connect
-    const tweets: Tweet[] = await db.manager.find(Tweet)
-    
+    const tweets = await Tweet.find()
+
     if (!tweets) {
       throw new Error('Could not find any tweets')
     }
 
     res.status(200).json(tweets)
-    
+    //To quickly clear table from tweets for testing
+    //Tweet.clear()    
   } catch (err) {
     next(err)
   }
@@ -45,10 +36,8 @@ export const getTweets: RequestHandler = async (req, res, next) => {
 export const getTweet: RequestHandler = async (req, res, next) => {  
   
   try {
-    const db = await connect
     const id: number = parseInt(req.params.id)
-    const tweet: Tweet | undefined = await db.manager.findOne(Tweet, id)
-    //const tweet: Tweet = await Tweet.findOne({ where: { id } })
+    const tweet: Tweet | undefined = await Tweet.findOne({ where: { id } })
     
     if (!tweet) {
       throw new Error('Tweet does not exist')    

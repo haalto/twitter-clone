@@ -6,8 +6,17 @@ import tweetRouter from './routes/tweets'
 import userRouter from './routes/users'
 import loginRouter from './routes/login'
 import { unknownEndpoint, errorHandler } from './utils/middleware'
+import { connect } from './utils/db'
 
 const app = express()
+
+connect
+  .then(() => {
+    console.log('Connected to the database!')
+  })
+  .catch(err => {
+    console.log(`Could not connect to the db: ${err}`)
+  })
 
 app.use(cors())
 app.use(json())

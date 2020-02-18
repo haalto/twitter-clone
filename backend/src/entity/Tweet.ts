@@ -1,9 +1,17 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm'
+import { BaseEntity, 
+         Entity, 
+         Column, 
+         CreateDateColumn, 
+         UpdateDateColumn, 
+         PrimaryGeneratedColumn,
+         OneToMany 
+} from 'typeorm'
+import { User } from './User'
 
 @Entity()
-export class Tweet {
+export class Tweet extends BaseEntity{
   
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Column()
@@ -12,6 +20,14 @@ export class Tweet {
   @Column()
   content!: string
 
-  @Column()
+  @Column({
+    default: 0
+  })
   likes!: number
+
+  @CreateDateColumn()
+  createdAt!: Date
+
+  @UpdateDateColumn()
+  updatedAt!: Date
 }

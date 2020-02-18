@@ -53,6 +53,7 @@ const MainContainer = () => {
 
     try {
       const response = await newTweet(tweetObject, token)
+      console.log(response.data)
       dispatch({type: 'SEND_TWEET', payload: response.data})
       tweetInputRef.current!.value = ''
     }
