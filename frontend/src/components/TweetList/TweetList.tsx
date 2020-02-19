@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import Tweet from '../Tweet/Tweet'
 import { orderBy } from 'lodash'
  
@@ -32,14 +32,18 @@ const TweetList: React.FC<Props> = ({ tweets, handleLike }) => {
   
   return (
     <div style={listStyle}>
-      <h1>This is your feed of "tweets"!</h1>
+      <h1 style={headerStyle}>This is your feed of "tweets"!</h1>
       {tweets.length === 0 ? 'No tweets available!' : renderTweets(sortedTweets)}
     </div>
   )
 }
 
-const listStyle = {
-  margin: '5vh auto'
+const listStyle: CSSProperties = {
+  margin: '5vh auto',
+}
+
+const headerStyle: CSSProperties = {
+  textAlign: 'center'
 }
 
 export default TweetList

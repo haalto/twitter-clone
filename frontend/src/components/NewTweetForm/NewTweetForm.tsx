@@ -9,7 +9,7 @@ const NewTweetForm: React.FC<Props> = ({ tweetInputRef, handleSubmit }) => {
   return (
     <div>
       <form style={formStyle} onSubmit={handleSubmit}>
-        <h4>Send a new tweet!</h4>
+        <h1>Send a new tweet!</h1>
         <textarea    
           ref={tweetInputRef}
           style={textFieldStyle}
@@ -36,10 +36,11 @@ const textFieldStyle: CSSProperties = {
   resize: 'none',
   backgroundColor: 'white',
   borderRadius: '10px',
-  boxShadow: '1px 1px 1px grey',
+  boxShadow: '5px 5px 2px black',
   border: 'none',
   margin: '5vh',
-  fontFamily: 'Shadows Into Light, cursive'
+  fontSize: '1.2em',
+  fontFamily: 'VT323, monospace'
 }
 
 const sendButtonStyle: CSSProperties = {
@@ -51,7 +52,8 @@ const sendButtonStyle: CSSProperties = {
   display: 'inline-block',
   border: 'none',
   transition: 'all 0.4s ease 0s',
-  fontFamily: 'Shadows Into Light, cursive',
+  //fontFamily: 'Shadows Into Light, cursive',
+  fontFamily: 'VT323, monospace',
   boxShadow: '1px 1px 1px grey',
   width: '20%'
  }

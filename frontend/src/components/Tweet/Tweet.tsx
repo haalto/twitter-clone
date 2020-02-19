@@ -61,7 +61,7 @@ const frameStyle: CSSProperties = {
   margin: '5vh',
   backgroundColor: 'white',
   borderRadius: '10px',
-  boxShadow: '5px 5px 2px grey'
+  boxShadow: '5px 5px 2px black'
 }
 
 const contentStyle: CSSProperties = {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 
 interface Props {
   handleLogout: () => void
@@ -7,32 +7,31 @@ interface Props {
 const Navbar: React.FC<Props> = ({ handleLogout }) => {
   return (
     <nav style={styleNavbar}>
-      <span style={logoStyle}>"Twitter" :D</span>
+      <div style={logoStyle}>"Twitter" :D</div>
       <button style={logOutStyle} onClick={handleLogout}>Logout</button>
     </nav>
   )
 }
 
-const styleNavbar = {
-  display: "flex",
-  justifyContent: 'space-evenly',
-  height: "10vh",
-  borderBottom: '1px solid rgba(245,245,245, 0.5)'
+const styleNavbar: CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column'
 }
 
-const logoStyle = {
+const logoStyle: CSSProperties = {
   color: "black"
 }
 
-const logOutStyle = {
+const logOutStyle: CSSProperties = {
   color: 'black',
   textDecoration: 'none',
   background: 'none',
   borderRadius: '20px',
   border: 'none',
-  transition: 'all 0.4s ease 0s',
-  fontFamily: 'Shadows Into Light, cursive',
-  width: '20%'
+  //fontFamily: 'Shadows Into Light, cursive',
+  fontFamily: 'VT323, monospace',
+  textAlign: 'left',
+  fontSize: '1em'
 }
 
 export default Navbar

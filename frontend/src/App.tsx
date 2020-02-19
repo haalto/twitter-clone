@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, CSSProperties } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import LoginContainer from './containers/LoginContainer/LoginContainer'
 import RegisterContainer from './containers/RegisterContainer/RegisterContainer'
@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App" style={appStyle}>
         <Switch>
           <Route exact path="/" component={token ? MainContainer : LandingPage}/>
           <Route exact path="/login" component={LoginContainer}/>
@@ -37,6 +37,10 @@ const App: React.FC = () => {
       </div>
     </BrowserRouter>  
   )
+}
+
+const appStyle: CSSProperties = {
+  height: '100%'
 }
 
 export default App
