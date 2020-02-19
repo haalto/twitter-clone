@@ -4,7 +4,9 @@ import { BaseEntity,
          CreateDateColumn, 
          UpdateDateColumn, 
          PrimaryGeneratedColumn,
-         ManyToOne 
+         ManyToOne, 
+         ManyToMany,
+         JoinTable
 } from 'typeorm'
 import { User } from './User'
 
@@ -30,4 +32,8 @@ export class Tweet extends BaseEntity{
 
   @ManyToOne(type => User, user => user.tweets)
   user!: User
+
+  @ManyToMany(type => User, user => user.likes)
+  @JoinTable()
+  likedBy!: User[]
 }

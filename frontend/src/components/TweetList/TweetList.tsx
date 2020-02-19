@@ -12,16 +12,23 @@ interface TweetInterface {
     nickname: string
     id: string
   }
+  likedBy: User[]
+}
+
+interface User {
+  id: string
+  username: string
 }
 
 interface Props {
   tweets: TweetInterface[]
+  handleLike: any
 }
 
-const TweetList: React.FC<Props> = ({ tweets }) => {
+const TweetList: React.FC<Props> = ({ tweets, handleLike }) => {
   
   const sortedTweets = orderBy(tweets, ['createdAt'], 'desc')
-  const renderTweets = (tweets: TweetInterface[]) => tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet}></Tweet>)
+  const renderTweets = (tweets: TweetInterface[]) => tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} handleLike={handleLike}/>)
   
   return (
     <div style={listStyle}>

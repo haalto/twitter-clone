@@ -52,6 +52,7 @@ const sendButtonStyle: CSSProperties = {
   border: 'none',
   transition: 'all 0.4s ease 0s',
   fontFamily: 'Shadows Into Light, cursive',
+  boxShadow: '1px 1px 1px grey',
   width: '20%'
  }
 

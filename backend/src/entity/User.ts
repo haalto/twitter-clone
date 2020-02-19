@@ -4,7 +4,9 @@ import { Entity,
          CreateDateColumn, 
          UpdateDateColumn, 
          BaseEntity,
-         OneToMany
+         OneToMany,
+         ManyToMany,
+         JoinTable
 } from 'typeorm'
 import { Tweet } from './Tweet'
 
@@ -25,6 +27,9 @@ export class User extends BaseEntity {
 
   @OneToMany(type => Tweet, tweet => tweet.user)
   tweets!: Tweet[]
+
+  @ManyToMany(type => Tweet, tweet => tweet.likedBy)
+  public likes!: Tweet[]
 
   @CreateDateColumn()
   createdAt!: Date

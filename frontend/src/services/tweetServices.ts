@@ -15,3 +15,13 @@ export const getTweets = async () => {
   const response = await axios.get(baseUrl)
   return response
 }
+
+export const likeTweet = async (tweetId: string, token: string) => {
+  const config = {
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  }
+  const response = await axios.put(`${baseUrl}/${tweetId}`, { type: 'like' }, config)
+  return response
+}

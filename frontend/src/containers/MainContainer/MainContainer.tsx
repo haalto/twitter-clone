@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Navbar from '../../components/Navbar/Navbar'
 import NewTweetForm from '../../components/NewTweetForm/NewTweetForm'
 import TweetList from '../../components/TweetList/TweetList'
-import { newTweet, getTweets } from '../../services/tweetServices'
+import { newTweet, getTweets, likeTweet } from '../../services/tweetServices'
 
 const MainContainer = () => {
   
@@ -24,7 +24,13 @@ const MainContainer = () => {
       username: string
       nickname: string
       id: string
-    }
+    },
+    likedBy: User[]
+  }
+
+  interface User {
+    id: string
+    username: string
   }
 
   interface TweetState {
@@ -42,8 +48,7 @@ const MainContainer = () => {
       try {
         const response = await getTweets()
         if (response.data) {
-          console.log(response.data)
-          dispatch({type: 'ADD_TWEETS', payload: response.data})
+          dispatch({type: 'SET_TWEETS', payload: response.data})
         }
       } catch (err) {
         console.log(err)
@@ -53,7 +58,8 @@ const MainContainer = () => {
   }, [dispatch])
 
   const handleLogout = () => {    
-    dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: false, token: null, username: null}})
+    dispatch({ type: 'UPDATE_SESSION', payload: { loggedIn: false, token: null, username: null } })
+    dispatch({ type: 'SET_TWEETS', payload: [] })
     localStorage.clear()
   }
 
@@ -66,23 +72,38 @@ const MainContainer = () => {
 
     try {
       const response = await newTweet(tweetObject, token)
-      console.log(response.data)
       dispatch({type: 'SEND_TWEET', payload: response.data})
       tweetInputRef.current!.value = ''
     }
     catch (err) {
       console.log(err)
-    }    
+    }     
   }
+
+  const handleLike = async (tweetId: string) => {
+    try {
+      const response = await likeTweet(tweetId, token)
+      const updatedTweet: Tweet = response.data
+      const updatedTweets = tweets.map(t => (t.id === updatedTweet.id) ? updatedTweet : t)
+      dispatch({ type: 'SET_TWEETS', payload: updatedTweets })
+    } catch (err) {
+      console.log(err)
+    }
+  } 
   
   return (
     <div>
-      <Navbar handleLogout={handleLogout}/>
+      <Navbar 
+        handleLogout={handleLogout}
+      />
       <NewTweetForm
         tweetInputRef={tweetInputRef}
         handleSubmit={handleSubmit}
       />
-      <TweetList tweets={tweets}/>
+      <TweetList 
+        tweets={tweets}
+        handleLike={handleLike}
+      />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { SEND_TWEET, ADD_TWEETS, TweetActionTypes, TweetListState } from './types'
+import { SEND_TWEET, SET_TWEETS, TweetActionTypes, TweetListState } from './types'
 
 const initialState: TweetListState = {
   tweets: []
@@ -16,10 +16,9 @@ export function tweetReducer(
       }
     }
 
-    case ADD_TWEETS: {
-      console.log('adding all tweets')
+    case SET_TWEETS: {
       return {
-        tweets: state.tweets.concat(action.payload)
+        tweets: state.tweets = action.payload
       }
     }
 

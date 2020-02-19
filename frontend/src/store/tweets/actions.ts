@@ -1,4 +1,4 @@
-import { Tweet, SEND_TWEET, ADD_TWEETS, TweetActionTypes } from './types'
+import { Tweet, SEND_TWEET, SET_TWEETS, TweetActionTypes } from './types'
 
 export function sendTweet(newTweet: Tweet): TweetActionTypes {
   return {
@@ -7,9 +7,9 @@ export function sendTweet(newTweet: Tweet): TweetActionTypes {
   }
 }
 
-export function addTweets(tweets: Tweet[]): TweetActionTypes {
+export function setTweets(tweets: Tweet[]): TweetActionTypes {
   return {
-    type: ADD_TWEETS,
+    type: SET_TWEETS,
     payload: tweets
   }
 }

@@ -1,3 +1,7 @@
+interface User {
+  id: string
+}
+
 export interface Tweet {
   content: string
   likes: number
@@ -6,7 +10,8 @@ export interface Tweet {
     username: string
     nickname: string
     id: string
-  }
+  },
+  likedBy: User[]
 }
 
 export interface TweetListState {
@@ -20,12 +25,12 @@ interface SendTweetAction {
   payload: Tweet
 }
 
-export const ADD_TWEETS = 'ADD_TWEETS'
+export const SET_TWEETS = 'SET_TWEETS'
 
-interface AddTweetsAction {
-  type: typeof ADD_TWEETS
+interface SetTweetsAction {
+  type: typeof SET_TWEETS
   payload: Tweet[]
 }
 
 
-export type TweetActionTypes = SendTweetAction | AddTweetsAction
+export type TweetActionTypes = SendTweetAction | SetTweetsAction

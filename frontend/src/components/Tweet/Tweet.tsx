@@ -1,7 +1,11 @@
 import React, { CSSProperties } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from 'react-redux'
 
 interface Props {
   tweet: {
+    id: string
     content: string
     likes: number
     createdAt: Date
@@ -10,21 +14,43 @@ interface Props {
       nickname: string
       id: string
     }
+    likedBy: User[]
+  }
+  handleLike: any
+}
+
+interface User {
+  id: string
+  username: string
+}
+
+interface SystemState {
+  system: {
+    username: string
   }
 }
 
-const Tweet: React.FC<Props> = ({ tweet }) => {
+
+const Tweet: React.FC<Props> = ({ tweet, handleLike }) => {
+
+  const username = useSelector((state: SystemState) => state.system.username)
+
   return (
     <div style={frameStyle}>
       <div style={contentStyle}>
         <div style={headerStyle}> 
           <span>{tweet.user.nickname}</span>
           <span style={nicknameStyle} > @{tweet.user.username}</span>
-        </div>
-        <div style={dateStyle}>{tweet.createdAt}</div>
+          <div style={dateStyle}>{tweet.createdAt}</div>
+        </div>       
         <p style={contentTextStyle}>{tweet.content}</p>
-        <div>
-          <span style={likeStyle}>{tweet.likes} likes</span>
+        <div style={footerStyle}>
+          {
+            tweet.likedBy.some(u => u.username === username)
+            ? <FontAwesomeIcon color="red" onClick={() => handleLike(tweet.id)} icon={faHeart}/>
+            : <FontAwesomeIcon onClick={() => handleLike(tweet.id)} icon={faHeart}/>
+          }
+          <span style={likeStyle}>{tweet.likedBy.length} likes</span>
         </div>
       </div>
     </div>
@@ -61,7 +87,12 @@ const contentTextStyle: CSSProperties = {
 }
 
 const likeStyle: CSSProperties = {
-  fontSize: '0.9em'
+  fontSize: '0.9em',
+  marginLeft: '10px'
+}
+
+const footerStyle: CSSProperties = {
+  borderTop: '1px solid rgb(245,245,245)'
 }
 
 export default Tweet
