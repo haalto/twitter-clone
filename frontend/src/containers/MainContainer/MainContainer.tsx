@@ -4,42 +4,19 @@ import Navbar from '../../components/Navbar/Navbar'
 import NewTweetForm from '../../components/NewTweetForm/NewTweetForm'
 import TweetList from '../../components/TweetList/TweetList'
 import { newTweet, getTweets, likeTweet } from '../../services/tweetServices'
+import { SystemInterface } from '../../types/SystemInterface'
+import { TweetInterface } from '../../types/TweetInterface'
 
 const MainContainer = () => {
-  
-  interface SystemState {
-    system: {
-      token: string,
-      loggedIn: boolean,
-      username: string
-    }
-  }
-
-  interface Tweet {
-    id: string
-    content: string
-    likes: number
-    createdAt: Date
-    user: {
-      username: string
-      nickname: string
-      id: string
-    },
-    likedBy: User[]
-  }
-
-  interface User {
-    id: string
-    username: string
-  }
 
   interface TweetState {
     tweets: {
-      tweets: Tweet[]
+      tweets: TweetInterface[]
     }
   }
+  
   const dispatch = useDispatch()
-  const token = useSelector((state: SystemState) => state.system.token)
+  const token = useSelector((state: SystemInterface) => state.system.token)
   const tweets = useSelector((state: TweetState) => state.tweets.tweets)
   const tweetInputRef = useRef<HTMLInputElement>(null)
 
@@ -83,7 +60,7 @@ const MainContainer = () => {
   const handleLike = async (tweetId: string) => {
     try {
       const response = await likeTweet(tweetId, token)
-      const updatedTweet: Tweet = response.data
+      const updatedTweet: TweetInterface = response.data
       const updatedTweets = tweets.map(t => (t.id === updatedTweet.id) ? updatedTweet : t)
       dispatch({ type: 'SET_TWEETS', payload: updatedTweets })
     } catch (err) {

@@ -36,7 +36,7 @@ const textFieldStyle: CSSProperties = {
   resize: 'none',
   backgroundColor: 'white',
   borderRadius: '10px',
-  boxShadow: '5px 5px 2px black',
+  boxShadow: '5px 5px 2px rgba(60,60,60, 0.3)',
   border: 'none',
   margin: '5vh',
   fontSize: '1.2em',
@@ -54,7 +54,7 @@ const sendButtonStyle: CSSProperties = {
   transition: 'all 0.4s ease 0s',
   //fontFamily: 'Shadows Into Light, cursive',
   fontFamily: 'VT323, monospace',
-  boxShadow: '1px 1px 1px grey',
+  boxShadow: '5px 5px 2px rgba(60,60,60, 0.3)',
   width: '20%'
  }
 

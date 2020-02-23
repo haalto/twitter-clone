@@ -4,23 +4,13 @@ import { Redirect } from 'react-router-dom'
 import { login } from '../../services/loginServices'
 import LoginForm from '../../components/LoginForm/LoginForm'
 import Notification from '../../components/Notification/Notification'
+import { SystemInterface } from '../../types/SystemInterface'
+import { NotificationInterface } from '../../types/NotificationInterface'
 
 const LoginContainer: React.FC = () => {
   
-  interface SystemState {
-    system: {
-      loggedIn: boolean
-    }
-  }
-
-  interface NotificationState {
-    notification: {
-      message: string | null
-    }
-  }
-
-  const message = useSelector((state: NotificationState) => state.notification.message)
-  const loggedIn = useSelector((state: SystemState) => state.system.loggedIn)
+  const message = useSelector((state: NotificationInterface) => state.notification.message)
+  const loggedIn = useSelector((state: SystemInterface) => state.system.loggedIn)
   const dispatch = useDispatch()
 
   const usernameInputRef = useRef<HTMLInputElement>(null)

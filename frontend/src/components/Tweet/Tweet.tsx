@@ -2,38 +2,17 @@ import React, { CSSProperties } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
-
+import { TweetInterface } from '../../types/TweetInterface'
+import { SystemInterface } from '../../types/SystemInterface'
+ 
 interface Props {
-  tweet: {
-    id: string
-    content: string
-    likes: number
-    createdAt: Date
-    user: {
-      username: string
-      nickname: string
-      id: string
-    }
-    likedBy: User[]
-  }
+  tweet: TweetInterface
   handleLike: any
 }
 
-interface User {
-  id: string
-  username: string
-}
-
-interface SystemState {
-  system: {
-    username: string
-  }
-}
-
-
 const Tweet: React.FC<Props> = ({ tweet, handleLike }) => {
 
-  const username = useSelector((state: SystemState) => state.system.username)
+  const username = useSelector((state: SystemInterface) => state.system.username)
 
   return (
     <div style={frameStyle}>
@@ -47,7 +26,7 @@ const Tweet: React.FC<Props> = ({ tweet, handleLike }) => {
         <div style={footerStyle}>
           {
             tweet.likedBy.some(u => u.username === username)
-            ? <FontAwesomeIcon color="red" onClick={() => handleLike(tweet.id)} icon={faHeart}/>
+            ? <FontAwesomeIcon color='red' onClick={() => handleLike(tweet.id)} icon={faHeart}/>
             : <FontAwesomeIcon onClick={() => handleLike(tweet.id)} icon={faHeart}/>
           }
           <span style={likeStyle}>{tweet.likedBy.length} likes</span>
@@ -61,7 +40,7 @@ const frameStyle: CSSProperties = {
   margin: '5vh',
   backgroundColor: 'white',
   borderRadius: '10px',
-  boxShadow: '5px 5px 2px black'
+  boxShadow: '5px 5px 2px rgba(30,30,30, 0.6)'
 }
 
 const contentStyle: CSSProperties = {
