@@ -4,6 +4,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import { TweetInterface } from '../../types/TweetInterface'
 import { SystemInterface } from '../../types/SystemInterface'
+import { useHistory } from 'react-router-dom'
  
 interface Props {
   tweet: TweetInterface
@@ -13,12 +14,14 @@ interface Props {
 const Tweet: React.FC<Props> = ({ tweet, handleLike }) => {
 
   const username = useSelector((state: SystemInterface) => state.system.username)
+  const history = useHistory()
+  const goToUserProfile = (username: string) => history.push(`/${username}`)
 
   return (
     <div style={frameStyle}>
       <div style={contentStyle}>
         <div style={headerStyle}> 
-          <span>{tweet.user.nickname}</span>
+          <span onClick={()=>goToUserProfile(tweet.user.username)}>{tweet.user.nickname}</span>
           <span style={nicknameStyle} > @{tweet.user.username}</span>
           <div style={dateStyle}>{tweet.createdAt}</div>
         </div>       

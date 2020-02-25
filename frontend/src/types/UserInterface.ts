@@ -5,4 +5,5 @@ export  interface UserInterface {
   username: string
   nickname: string
   tweets: TweetInterface[]
+  bio: string
 }

@@ -1,13 +1,18 @@
 import React, { CSSProperties } from 'react'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   handleLogout: () => void
 }
 
 const Navbar: React.FC<Props> = ({ handleLogout }) => {
+
+  const history = useHistory()
+  const goToMain = () => history.push('/')
+
   return (
     <nav style={styleNavbar}>
-      <div style={logoStyle}>"Twitter" :D</div>
+      <div onClick={goToMain} style={logoStyle}>"Twitter" :D</div>
       <button style={logOutStyle} onClick={handleLogout}>Logout</button>
     </nav>
   )

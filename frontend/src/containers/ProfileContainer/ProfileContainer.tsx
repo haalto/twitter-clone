@@ -5,13 +5,16 @@ import { getUser } from '../../services/userServices'
 import { UserInterface } from '../../types/UserInterface'
 import { TweetInterface } from '../../types/TweetInterface'
 import { SystemInterface } from '../../types/SystemInterface'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { likeTweet } from '../../services/tweetServices'
+import Navbar from '../../components/Navbar/Navbar'
+import Profile from '../../components/Profile/Profile'
  
 const ProfileContainer: React.FC = () => {  
   const { username } = useParams()
   const [user, setUser] = useState<UserInterface | null>(null)
   const token = useSelector((state: SystemInterface) => state.system.token)
+  const dispatch = useDispatch()
 
   useEffect(() => {    
     const fetchUser = async () => {
@@ -42,10 +45,20 @@ const ProfileContainer: React.FC = () => {
     }
   }
 
+  const handleLogout = () => {    
+    dispatch({ type: 'UPDATE_SESSION', payload: { loggedIn: false, token: null, username: null } })
+    dispatch({ type: 'SET_TWEETS', payload: [] })
+    localStorage.clear()
+  }
+
   return(
     <div>
-      {!user ? 'Could not find user!' : 
-        <TweetList tweets={user.tweets} handleLike={handleLike}/>      
+      {!user ? 'Could not find user!' :
+      <div>
+        <Navbar handleLogout={handleLogout}/>
+        <Profile user={user}/>
+        <TweetList tweets={user.tweets} handleLike={handleLike}/> 
+      </div>     
       }
     </div>
   )

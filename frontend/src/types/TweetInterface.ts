@@ -5,10 +5,6 @@ export interface TweetInterface {
   content: string
   likes: number
   createdAt: Date
-  user: {
-    username: string
-    nickname: string
-    id: string
-  },
+  user: UserInterface
   likedBy: UserInterface[]
 }
