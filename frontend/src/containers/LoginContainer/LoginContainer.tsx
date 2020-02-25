@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { login } from '../../services/loginServices'
@@ -12,31 +12,26 @@ const LoginContainer: React.FC = () => {
   const message = useSelector((state: NotificationInterface) => state.notification.message)
   const loggedIn = useSelector((state: SystemInterface) => state.system.loggedIn)
   const dispatch = useDispatch()
-
-  const usernameInputRef = useRef<HTMLInputElement>(null)
-  const passwordInputRef = useRef<HTMLInputElement>(null)
+  
+  const [usernameInput, setUsername] = useState('')
+  const [passwordInput, setPassoword] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
 
     e.preventDefault()
-    const username: string = usernameInputRef.current!.value
-    const password: string = passwordInputRef.current!.value
-    
+     
     const loginInfo = {
-      username,
-      password
+      username: usernameInput,
+      password: passwordInput
     }
-
-    usernameInputRef.current!.value = ''
-    passwordInputRef.current!.value = ''
 
     try {
       const response = await login(loginInfo)
       const token = response.data.token
-      dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: true, token: token, username: username}})
+      dispatch({type: 'UPDATE_SESSION', payload: {loggedIn: true, token: token, username: usernameInput}})
 
       localStorage.setItem('token', token)
-      localStorage.setItem('username', username)      
+      localStorage.setItem('username', usernameInput)      
     }
     catch (err) {
       dispatch({type: 'UPDATE_NOTIFICATION', payload: {message: 'Username or password is wrong!'}})
@@ -56,8 +51,10 @@ const LoginContainer: React.FC = () => {
         </Notification>
         <LoginForm 
           handleSubmit={handleSubmit}
-          usernameInputRef={usernameInputRef}
-          passwordInputRef={passwordInputRef}>
+          usernameInput={usernameInput}
+          passwordInput={passwordInput}
+          handleUsernameInputChange={setUsername}
+          handlePasswordInputChange={setPassoword}>
         </LoginForm>
       </div>
     )

@@ -19,21 +19,16 @@ export class Tweet extends BaseEntity{
   @Column()
   content!: string
 
-  @Column({
-    default: 0
-  })
-  likes!: number
-
   @CreateDateColumn()
   createdAt!: Date
 
   @UpdateDateColumn()
   updatedAt!: Date
 
-  @ManyToOne(type => User, user => user.tweets)
+  @ManyToOne(type => User, user => user.tweets, { eager: true })
   user!: User
 
-  @ManyToMany(type => User, user => user.likes)
+  @ManyToMany(type => User, user => user.likes, { eager: true })
   @JoinTable()
   likedBy!: User[]
 }

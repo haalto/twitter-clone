@@ -4,6 +4,7 @@ import LoginContainer from './containers/LoginContainer/LoginContainer'
 import RegisterContainer from './containers/RegisterContainer/RegisterContainer'
 import LandingPage from './components/LandingPage/LandingPage'
 import MainContainer from './containers/MainContainer/MainContainer'
+import ProfileContainer from './containers/ProfileContainer/ProfileContainer'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 const App: React.FC = () => {
@@ -33,6 +34,7 @@ const App: React.FC = () => {
           <Route exact path="/" component={token ? MainContainer : LandingPage}/>
           <Route exact path="/login" component={LoginContainer}/>
           <Route exact path="/register" component={RegisterContainer}/>
+          <Route path="/:username" component={ProfileContainer}/>
         </Switch>
       </div>
     </BrowserRouter>  

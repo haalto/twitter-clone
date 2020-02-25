@@ -3,11 +3,13 @@ import { useHistory } from 'react-router-dom'
 
 interface Props {
   handleSubmit: any,
-  usernameInputRef: any,
-  passwordInputRef: any
+  usernameInput: string,
+  passwordInput: string,
+  handleUsernameInputChange: any,
+  handlePasswordInputChange: any
 }
 
-const LoginForm: React.FC<Props> = ({ handleSubmit, usernameInputRef, passwordInputRef }) => {
+const LoginForm: React.FC<Props> = ({ handleSubmit, usernameInput, passwordInput, handleUsernameInputChange, handlePasswordInputChange }) => {
   
   const history = useHistory()
   const goHome = () => history.push('/')
@@ -22,12 +24,14 @@ const LoginForm: React.FC<Props> = ({ handleSubmit, usernameInputRef, passwordIn
         <input 
           type="text" 
           placeholder="username"
-          ref={usernameInputRef}>    
+          value={usernameInput}
+          onChange={(e) => handleUsernameInputChange(e.target.value)}>    
         </input>
         <input 
           type="password" 
           placeholder="password"
-          ref={passwordInputRef}>
+          value={passwordInput}
+          onChange={(e) => handlePasswordInputChange(e.target.value)}>
         </input>
         <button type="submit">
           login

@@ -44,8 +44,8 @@ export const getUsers: RequestHandler = async (req, res, next) => {
 
 export const getUser: RequestHandler = async (req, res, next) => {
   try {
-    const id: string = (req.params as { id: string }).id
-    const user = await User.findOne({ id }, { relations: ['tweets'] })
+    const username: string = (req.params as { username: string }).username
+    const user = await User.findOne({ username }, { relations: ['tweets'], loadEagerRelations: true })
 
     if (!user || user === undefined) {
       throw new Error('Could not find user!')

@@ -9,7 +9,7 @@ from '../controllers/users'
 
 userRouter.get('/', getUsers)
 
-userRouter.get('/:id', getUser)
+userRouter.get('/:username', getUser)
 
 userRouter.post('/', createUser)
 

@@ -25,6 +25,9 @@ export class User extends BaseEntity {
   @Column()
   nickname!: string
 
+  @Column({default: 'placeholder bio'})
+  bio!: string
+
   @OneToMany(type => Tweet, tweet => tweet.user)
   tweets!: Tweet[]
 

@@ -1,32 +1,29 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import RegisterForm from '../../components/RegisterForm/RegisterForm'
 import { register } from '../../services/registerServices'
+import { useHistory } from 'react-router-dom'
 
 const RegisterContainer = () => {
   
-  const usernameInputRef = useRef<HTMLInputElement>(null)
-  const nicknameInputRef = useRef<HTMLInputElement>(null)
-  const passwordInputRef = useRef<HTMLInputElement>(null)
+  const [usernameInput, setUsernameInput] = useState('')
+  const [nicknameInput, setNicknameInput] = useState('')
+  const [passwordInput, setPasswordInput] = useState('')
+  const history = useHistory()
+  const goLogin = () => history.push('/login')
   
   const handleSubmit = async (e: React.FormEvent) => {    
     e.preventDefault()
 
-    const username = usernameInputRef.current!.value
-    const nickname = nicknameInputRef.current!.value
-    const password = passwordInputRef.current!.value
-
     const newUserObject = {
-      username,
-      nickname,
-      password
+      username: usernameInput,
+      nickname: nicknameInput,
+      password: passwordInput
     }
 
     try {
       const response = await register(newUserObject)
-      usernameInputRef.current!.value = ''
-      nicknameInputRef.current!.value = ''
-      passwordInputRef.current!.value = ''
       console.log(response)
+      goLogin()
     } catch (err) {
       console.log(err)
     }
@@ -35,9 +32,12 @@ const RegisterContainer = () => {
   return (
     <RegisterForm
       handleSubmit={handleSubmit}
-      usernameInputRef={usernameInputRef}
-      nicknameInputRef={nicknameInputRef}
-      passwordInputRef={passwordInputRef}
+      usernameInput={usernameInput}
+      nicknameInput={nicknameInput}
+      passwordInput={passwordInput}
+      handleUsernameChange={setUsernameInput}
+      handleNicknameChange={setNicknameInput}
+      handlePasswordChange={setPasswordInput}
     />
   )
 }

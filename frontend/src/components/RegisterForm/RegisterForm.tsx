@@ -3,12 +3,15 @@ import { useHistory } from 'react-router-dom'
 
 interface Props {
   handleSubmit: any,
-  usernameInputRef: any,
-  nicknameInputRef: any,
-  passwordInputRef: any
+  usernameInput: string,
+  nicknameInput: string,
+  passwordInput: string,
+  handleUsernameChange: any,
+  handleNicknameChange: any,
+  handlePasswordChange: any
 }
 
-const RegisterForm: React.FC<Props> = ({ handleSubmit, usernameInputRef, nicknameInputRef, passwordInputRef }) => {
+const RegisterForm: React.FC<Props> = ({ handleSubmit, usernameInput, nicknameInput, passwordInput, handleUsernameChange,handleNicknameChange, handlePasswordChange }) => {
 
   const history = useHistory()
   const goHome = () => history.push('/')
@@ -21,17 +24,20 @@ const RegisterForm: React.FC<Props> = ({ handleSubmit, usernameInputRef, nicknam
         <input 
           type="text" 
           placeholder="username"
-          ref={usernameInputRef}>
+          value={usernameInput}
+          onChange={(e) => handleUsernameChange(e.target.value)}>
         </input>
         <input 
           type="text" 
           placeholder="nickname"
-          ref={nicknameInputRef}>    
+          value={nicknameInput}
+          onChange={(e) => handleNicknameChange(e.target.value)}>    
         </input>
         <input 
           type="password" 
           placeholder="password"
-          ref={passwordInputRef}>         
+          value={passwordInput}
+          onChange={(e) => handlePasswordChange(e.target.value)}>         
         </input>
         <button 
           type="submit"

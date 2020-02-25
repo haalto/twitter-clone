@@ -1,18 +1,20 @@
 import React, { CSSProperties } from 'react'
 
 interface Props {
-  tweetInputRef: any
+  newTweetInput: any
+  handleNewTweet: any
   handleSubmit: any
 }
 
-const NewTweetForm: React.FC<Props> = ({ tweetInputRef, handleSubmit }) => {
+const NewTweetForm: React.FC<Props> = ({ newTweetInput, handleSubmit, handleNewTweet }) => {
   return (
     <div>
       <form style={formStyle} onSubmit={handleSubmit}>
         <h1>Send a new tweet!</h1>
         <textarea    
-          ref={tweetInputRef}
+          value={newTweetInput}
           style={textFieldStyle}
+          onChange={(e) => handleNewTweet(e.target.value)}
         >     
         </textarea>
         <button style={sendButtonStyle} type="submit">SEND</button>

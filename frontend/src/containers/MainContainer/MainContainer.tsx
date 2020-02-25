@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Navbar from '../../components/Navbar/Navbar'
 import NewTweetForm from '../../components/NewTweetForm/NewTweetForm'
@@ -18,7 +18,7 @@ const MainContainer = () => {
   const dispatch = useDispatch()
   const token = useSelector((state: SystemInterface) => state.system.token)
   const tweets = useSelector((state: TweetState) => state.tweets.tweets)
-  const tweetInputRef = useRef<HTMLInputElement>(null)
+  const [newTweetInput, setNewTweetInput] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {      
@@ -42,7 +42,7 @@ const MainContainer = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const tweetText = tweetInputRef.current!.value
+    const tweetText = newTweetInput
     const tweetObject = {
       content: tweetText
     }
@@ -50,7 +50,7 @@ const MainContainer = () => {
     try {
       const response = await newTweet(tweetObject, token)
       dispatch({type: 'SEND_TWEET', payload: response.data})
-      tweetInputRef.current!.value = ''
+      setNewTweetInput('')
     }
     catch (err) {
       console.log(err)
@@ -74,7 +74,8 @@ const MainContainer = () => {
         handleLogout={handleLogout}
       />
       <NewTweetForm
-        tweetInputRef={tweetInputRef}
+        newTweetInput={newTweetInput}
+        handleNewTweet={setNewTweetInput}
         handleSubmit={handleSubmit}
       />
       <TweetList 
