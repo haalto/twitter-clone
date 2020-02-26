@@ -30,7 +30,7 @@ const followButtonStyle: any = {
   background: 'white',
   padding: '5px',
   borderRadius: '20px',
-  border: 'none',
+  border: '1px solid black',
   transition: 'all 0.4s ease 0s',
   fontFamily: 'inherit',
   fontSize: '1em',

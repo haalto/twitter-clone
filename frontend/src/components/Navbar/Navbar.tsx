@@ -13,8 +13,8 @@ const Navbar: React.FC<Props> = ({ handleLogout }) => {
 
   return (
     <nav style={styleNavbar}>
-      <div onClick={goToMain} style={logoStyle}><span key="logo" style={linkStyle}>Home</span></div>
-      <div style={logOutStyle} onClick={handleLogout}><span  key="logout" style={linkStyle}>Logout</span></div>
+      <div style={logoStyle}><span onClick={goToMain} key="logo" style={linkStyle}>Home</span></div>
+      <div style={logOutStyle}><span onClick={handleLogout} key="logout" style={linkStyle}>Logout</span></div>
     </nav>
   )
 }
@@ -37,12 +37,12 @@ const logOutStyle: CSSProperties = {
   //fontFamily: 'Shadows Into Light, cursive',
   fontFamily: 'VT323, monospace',
   textAlign: 'left',
-  fontSize: '1em'
 }
 
 const linkStyle: any = {
+  fontSize: '1.5em',
   ':hover': {
-		borderBottom: '1px solid black',
+		borderBottom: '2px solid black',
 		cursor: 'pointer'
 	}
 }

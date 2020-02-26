@@ -13,7 +13,7 @@ const NewTweetForm: React.FC<Props> = ({ newTweetInput, handleSubmit, handleNewT
     <div>
       <form style={formStyle} onSubmit={handleSubmit}>
         <h1>Hello, you can send a new tweet!</h1>
-        <textarea    
+        <textarea
           value={newTweetInput}
           style={textFieldStyle}
           onChange={(e) => handleNewTweet(e.target.value)}

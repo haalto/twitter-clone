@@ -17,7 +17,7 @@ connect
     console.log('Connected to the database!')
     
     //Clear tweets from db when restarting
-    //await connection.manager.delete(Tweet, {})
+    await connection.manager.delete(Tweet, {})
 
     //Clear users from db when restarting
     //await connection.manager.delete(User, {})

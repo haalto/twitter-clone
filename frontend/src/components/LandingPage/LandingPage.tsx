@@ -1,5 +1,6 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
+import Radium from 'radium'
 
 const LandingPage: React.FC = () => {
 
@@ -11,40 +12,50 @@ const LandingPage: React.FC = () => {
     <div>
       <h1>See what’s happening in the world right now</h1>
       <h3>Join "Twitter" today :D</h3>
-      <button style={registerButtonStyle} onClick={goRegister}>Register</button>
-      <button style={loginButtonStyle} onClick={goLogin}>Login</button>
+      <button key="registerButton" style={registerButtonStyle} onClick={goRegister}>Register</button>
+      <button key="loginButton" style={loginButtonStyle} onClick={goLogin}>Login</button>
     </div>
   )
 }
 
-const registerButtonStyle: CSSProperties = {
+const registerButtonStyle: any = {
   color: 'black',
   textDecoration: 'none',
   background: 'white',
   padding: '5px',
   borderRadius: '20px',
   display: 'inline-block',
-  border: 'none',
+  border: '1px solid black',
   transition: 'all 0.4s ease 0s',
   fontFamily: 'inherit',
   fontSize: '1em',
   width: '20%',
-  margin: '2vh'
+  margin: '2vh',
+  ':hover': {
+    color: 'white',
+    background: 'black',
+    cursor: 'pointer'
+  }
 }
 
-const loginButtonStyle: CSSProperties = {
+const loginButtonStyle: any = {
   color: 'black',
   textDecoration: 'none',
+  border: '1px solid black',
   background: 'white',
   padding: '5px',
   borderRadius: '20px',
   display: 'inline-block',
-  border: 'none',
   transition: 'all 0.4s ease 0s',
   fontFamily: 'inherit',
   fontSize: '1em',
   width: '20%',
-  margin: '2vh'
+  margin: '2vh',
+  ':hover': {
+    color: 'white',
+    background: 'black',
+    cursor: 'pointer'
+  }
 }
 
-export default LandingPage
+export default Radium(LandingPage)

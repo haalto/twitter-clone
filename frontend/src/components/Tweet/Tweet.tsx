@@ -27,7 +27,7 @@ const Tweet: React.FC<Props> = ({ tweet, handleLike }) => {
           <div style={dateStyle}>{tweet.createdAt}</div>
         </div>       
         <p style={contentTextStyle}>{tweet.content}</p>
-        <div style={footerStyle}>
+        <div>
           {
             <span style={likeButtonStyle} key="likeButton">{
               tweet.likedBy.some(u => u.username === username)
@@ -91,10 +91,6 @@ const likeButtonStyle: any = {
   ':hover': {
     cursor: 'pointer'
   }
-}
-
-const footerStyle: CSSProperties = {
-  borderTop: '1px solid rgb(245,245,245)'
 }
 
 export default Radium(Tweet)

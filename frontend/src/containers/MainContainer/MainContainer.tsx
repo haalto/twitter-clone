@@ -7,14 +7,14 @@ import { newTweet, getTweets, likeTweet } from '../../services/tweetServices'
 import { SystemInterface } from '../../types/SystemInterface'
 import { TweetInterface } from '../../types/TweetInterface'
 
+interface TweetState {
+  tweets: {
+    tweets: TweetInterface[]
+  }
+}
+
 const MainContainer = () => {
 
-  interface TweetState {
-    tweets: {
-      tweets: TweetInterface[]
-    }
-  }
-  
   const dispatch = useDispatch()
   const token = useSelector((state: SystemInterface) => state.system.token)
   const tweets = useSelector((state: TweetState) => state.tweets.tweets)
