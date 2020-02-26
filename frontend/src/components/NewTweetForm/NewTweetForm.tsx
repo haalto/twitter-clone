@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react'
+import Radium from 'radium'
 
 interface Props {
   newTweetInput: any
@@ -7,17 +8,18 @@ interface Props {
 }
 
 const NewTweetForm: React.FC<Props> = ({ newTweetInput, handleSubmit, handleNewTweet }) => {
+
   return (
     <div>
       <form style={formStyle} onSubmit={handleSubmit}>
-        <h1>Send a new tweet!</h1>
+        <h1>Hello, you can send a new tweet!</h1>
         <textarea    
           value={newTweetInput}
           style={textFieldStyle}
           onChange={(e) => handleNewTweet(e.target.value)}
         >     
         </textarea>
-        <button style={sendButtonStyle} type="submit">SEND</button>
+        <button key="sendButton" style={sendButtonStyle} type="submit">SEND</button>
       </form>
     </div>
   )
@@ -45,7 +47,7 @@ const textFieldStyle: CSSProperties = {
   fontFamily: 'VT323, monospace'
 }
 
-const sendButtonStyle: CSSProperties = {
+const sendButtonStyle: any = {
   color: 'black',
   textDecoration: 'none',
   background: 'white',
@@ -54,10 +56,14 @@ const sendButtonStyle: CSSProperties = {
   display: 'inline-block',
   border: 'none',
   transition: 'all 0.4s ease 0s',
-  //fontFamily: 'Shadows Into Light, cursive',
-  fontFamily: 'VT323, monospace',
+  fontFamily: 'inherit',
   boxShadow: '5px 5px 2px rgba(60,60,60, 0.3)',
-  width: '20%'
+  width: '20%',
+  ':hover': {
+    color: 'white',
+    background: 'black',
+    cursor: 'pointer'
+  }
  }
 
-export default NewTweetForm
+export default Radium(NewTweetForm)

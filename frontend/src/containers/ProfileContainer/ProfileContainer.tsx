@@ -53,7 +53,7 @@ const ProfileContainer: React.FC = () => {
 
   return(
     <div>
-      {!user ? 'Could not find user!' :
+      {!user ? 'Loading stuff' :
       <div>
         <Navbar handleLogout={handleLogout}/>
         <Profile user={user}/>

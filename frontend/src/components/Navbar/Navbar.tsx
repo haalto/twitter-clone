@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react'
 import { useHistory } from 'react-router-dom'
+import Radium from 'radium'
 
 interface Props {
   handleLogout: () => void
@@ -12,8 +13,8 @@ const Navbar: React.FC<Props> = ({ handleLogout }) => {
 
   return (
     <nav style={styleNavbar}>
-      <div onClick={goToMain} style={logoStyle}>"Twitter" :D</div>
-      <button style={logOutStyle} onClick={handleLogout}>Logout</button>
+      <div onClick={goToMain} style={logoStyle}><span key="logo" style={linkStyle}>Home</span></div>
+      <div style={logOutStyle} onClick={handleLogout}><span  key="logout" style={linkStyle}>Logout</span></div>
     </nav>
   )
 }
@@ -39,4 +40,11 @@ const logOutStyle: CSSProperties = {
   fontSize: '1em'
 }
 
-export default Navbar
+const linkStyle: any = {
+  ':hover': {
+		borderBottom: '1px solid black',
+		cursor: 'pointer'
+	}
+}
+
+export default Radium(Navbar)

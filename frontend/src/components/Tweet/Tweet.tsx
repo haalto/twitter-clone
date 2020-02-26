@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux'
 import { TweetInterface } from '../../types/TweetInterface'
 import { SystemInterface } from '../../types/SystemInterface'
 import { useHistory } from 'react-router-dom'
- 
+import Radium from 'radium'
+
 interface Props {
   tweet: TweetInterface
   handleLike: any
@@ -21,16 +22,18 @@ const Tweet: React.FC<Props> = ({ tweet, handleLike }) => {
     <div style={frameStyle}>
       <div style={contentStyle}>
         <div style={headerStyle}> 
-          <span onClick={()=>goToUserProfile(tweet.user.username)}>{tweet.user.nickname}</span>
+          <span style={usernameStyle} onClick={()=>goToUserProfile(tweet.user.username)}>{tweet.user.nickname}</span>
           <span style={nicknameStyle} > @{tweet.user.username}</span>
           <div style={dateStyle}>{tweet.createdAt}</div>
         </div>       
         <p style={contentTextStyle}>{tweet.content}</p>
         <div style={footerStyle}>
           {
-            tweet.likedBy.some(u => u.username === username)
-            ? <FontAwesomeIcon color='red' onClick={() => handleLike(tweet.id)} icon={faHeart}/>
-            : <FontAwesomeIcon onClick={() => handleLike(tweet.id)} icon={faHeart}/>
+            <span style={likeButtonStyle} key="likeButton">{
+              tweet.likedBy.some(u => u.username === username)
+              ? <FontAwesomeIcon color='red' onClick={() => handleLike(tweet.id)} icon={faHeart}/>
+              : <FontAwesomeIcon onClick={() => handleLike(tweet.id)} icon={faHeart}/>
+            }</span>
           }
           <span style={likeStyle}>{tweet.likedBy.length} likes</span>
         </div>
@@ -43,7 +46,8 @@ const frameStyle: CSSProperties = {
   margin: '5vh',
   backgroundColor: 'white',
   borderRadius: '10px',
-  boxShadow: '5px 5px 2px rgba(30,30,30, 0.6)'
+  boxShadow: '5px 5px 2px rgba(30,30,30, 0.6)',
+  border: '1px solid black'
 }
 
 const contentStyle: CSSProperties = {
@@ -52,6 +56,14 @@ const contentStyle: CSSProperties = {
 
 const headerStyle: CSSProperties = {
   borderBottom: '1px solid rgb(245,245,245)'
+}
+
+//Not sure which type should be used here when using Radium?
+const usernameStyle: any = {
+	':hover': {
+		borderBottom: '1px solid black',
+    cursor: 'pointer'
+	}
 }
 
 const nicknameStyle: CSSProperties = {
@@ -65,7 +77,9 @@ const dateStyle: CSSProperties = {
 
 const contentTextStyle: CSSProperties = {
   fontSize: '1.3em',
-  whiteSpace: 'pre-line'
+  whiteSpace: 'pre-line',
+  overflowWrap: 'break-word',
+
 }
 
 const likeStyle: CSSProperties = {
@@ -73,8 +87,14 @@ const likeStyle: CSSProperties = {
   marginLeft: '10px'
 }
 
+const likeButtonStyle: any = {
+  ':hover': {
+    cursor: 'pointer'
+  }
+}
+
 const footerStyle: CSSProperties = {
   borderTop: '1px solid rgb(245,245,245)'
 }
 
-export default Tweet
+export default Radium(Tweet)

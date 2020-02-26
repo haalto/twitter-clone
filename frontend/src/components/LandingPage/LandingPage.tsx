@@ -26,7 +26,7 @@ const registerButtonStyle: CSSProperties = {
   display: 'inline-block',
   border: 'none',
   transition: 'all 0.4s ease 0s',
-  fontFamily: 'Shadows Into Light, cursive',
+  fontFamily: 'inherit',
   fontSize: '1em',
   width: '20%',
   margin: '2vh'
@@ -41,7 +41,7 @@ const loginButtonStyle: CSSProperties = {
   display: 'inline-block',
   border: 'none',
   transition: 'all 0.4s ease 0s',
-  fontFamily: 'Shadows Into Light, cursive',
+  fontFamily: 'inherit',
   fontSize: '1em',
   width: '20%',
   margin: '2vh'

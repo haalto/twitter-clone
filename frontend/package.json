@@ -18,11 +18,13 @@
     "@types/react-router-dom": "^5.1.3",
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
+    "radium": "^0.26.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "react-spring": "^8.0.27",
     "redux": "^4.0.5",
     "typescript": "^3.7.5"
   },
@@ -46,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/radium": "^0.24.2"
   }
 }
